@@ -13,7 +13,7 @@ const BASE_URL = 'http://localhost:8000/graph'
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
@@ -32,8 +32,6 @@ class RelationshipGraph extends Component {
       graph: null,
       graphUUID: null,
       nodes: null,
-      nodeSet: new Set(),
-      edgeSet: new Set(),
       edges: null,
       network: null,
       currentNode: null,
@@ -48,7 +46,6 @@ class RelationshipGraph extends Component {
 
   fetchGraph = (page = null) => {
     if (page === this.state.page) return
-    const { nodes, edges, nodeSet, edgeSet } = this.state
     let url = `${BASE_URL}`
     if (page) {
         url = `${url}?page=${page}`
@@ -57,7 +54,6 @@ class RelationshipGraph extends Component {
     axios.get(url)
       .then(response => {
         const newNodes = [];
-        const newEdges = [];
 
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
@@ -88,10 +84,8 @@ class RelationshipGraph extends Component {
   }
 
   render() {
-    const { nodes, edges, defaultPage, page, graphUUID } = this.state
+    const { nodes, edges, defaultPage, page, graphUUID, currentNode, graph } = this.state
     if (!nodes || !edges) return null
-
-    const graph = { nodes, edges }
 
     const options = {
       layout: {
@@ -131,7 +125,6 @@ class RelationshipGraph extends Component {
     const events = {
       click: (obj) => {
         var { nodes, edges, event, pointer, items } = obj;
-        console.log(obj)
         this.setState({ currentNode: nodes[0] })
       }
     };
@@ -158,13 +151,22 @@ class RelationshipGraph extends Component {
         <div className="col-xs-12">
           <Graph
             key={graphUUID}
-            graph={graph}
+            graph={{ nodes, edges }}
             options={options}
             events={events}
             getNetwork={network => {
               this.getNetwork(network)
             }}
           />
+          {graph[currentNode]?
+            <div>
+              <p>Name: {graph[currentNode].name}</p>
+              <p>Description: {graph[currentNode].description}</p>
+              <p>First appearance on page {graph[currentNode].page}</p>
+            </div>
+            :
+            null
+          }
         </div>
       </div>
     );

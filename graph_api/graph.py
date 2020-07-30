@@ -31,16 +31,23 @@ class RelationshipGraph:
             'Rebeca': [{ 'to': 'Ursula', 'label': 'filha'}, { 'to': 'Jose Arcadio Buendia', 'label': 'filha'}, { 'to': 'Aureliano', 'label': 'irma'}, { 'to': 'Jose Arcadio', 'label': 'irma'}],
         }
 
+    def get_graph(self):
+        return { c: {'relations': r, 'name': c, **self.characters_info[c] }for c, r in self.graph.items()}
+
     def get_characters(self, graph):
         return [{'name': k, **v} for k, v in self.characters_info.items() if k in graph]
 
     def get_edges(self, graph):
-        return [{'from': a, 'to': b['to']} for a, v in graph.items() for b in v]
+        return [{'from': a, 'to': b['to']} for a, v in graph.items() for b in v['relations']]
 
     def get_subgraph_until_page(self, page):
         subgraph = {}
         for c1, relations in self.graph.items():
             if self.characters_info[c1]['page'] > page:
                 continue
-            subgraph[c1] = [c2 for c2 in relations if self.characters_info[c2['to']]['page'] <= page]
+            subgraph[c1] = {
+                'relations': [c2 for c2 in relations if self.characters_info[c2['to']]['page'] <= page],
+                'name': c1,
+                **self.characters_info[c1],
+            }
         return subgraph

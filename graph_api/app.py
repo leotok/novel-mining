@@ -27,7 +27,7 @@ def graph():
                 'edges': g.get_edges(subgraph),
             })
         return jsonify({
-            'graph': g.graph,
+            'graph': g.get_graph(),
             'nodes': g.get_characters(g.graph),
             'edges': g.get_edges(g.graph),
         })
