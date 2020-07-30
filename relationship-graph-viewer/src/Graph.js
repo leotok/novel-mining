@@ -30,14 +30,15 @@ class RelationshipGraph extends Component {
     
     this.state = {
       graph: null,
+      graphUUID: null,
       nodes: null,
       nodeSet: new Set(),
       edgeSet: new Set(),
       edges: null,
       network: null,
-      currentItem: null,
+      currentNode: null,
       defaultPage: 1,
-      page: 1
+      page: null
     }
   }
 
@@ -46,6 +47,7 @@ class RelationshipGraph extends Component {
   }
 
   fetchGraph = (page = null) => {
+    if (page === this.state.page) return
     const { nodes, edges, nodeSet, edgeSet } = this.state
     let url = `${BASE_URL}`
     if (page) {
@@ -59,13 +61,15 @@ class RelationshipGraph extends Component {
 
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
-          newNodes.push({ 'id': node, 'label': node, 'title': node, value: 1 })
+          newNodes.push({ 'id': node.name, 'label': node.name, 'title': node, value: 1, page: node.page, description: node.description })
         }
 
         this.setState({ 
           edges: response.data.edges,
           nodes: newNodes,
           graph: response.data.graph,
+          graphUUID: uuidv4(),
+          page: page
         })
       })
       .catch(error => {
@@ -80,12 +84,11 @@ class RelationshipGraph extends Component {
   }
 
   changePage = (event, page) => {
-    this.setState({ page })
     this.fetchGraph(page)
   }
 
   render() {
-    const { nodes, edges, defaultPage, page } = this.state
+    const { nodes, edges, defaultPage, page, graphUUID } = this.state
     if (!nodes || !edges) return null
 
     const graph = { nodes, edges }
@@ -126,9 +129,10 @@ class RelationshipGraph extends Component {
     };
   
     const events = {
-      click: function(obj) {
+      click: (obj) => {
         var { nodes, edges, event, pointer, items } = obj;
         console.log(obj)
+        this.setState({ currentNode: nodes[0] })
       }
     };
 
@@ -153,7 +157,7 @@ class RelationshipGraph extends Component {
         </div>
         <div className="col-xs-12">
           <Graph
-            key={uuidv4()}
+            key={graphUUID}
             graph={graph}
             options={options}
             events={events}

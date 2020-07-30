@@ -1,12 +1,27 @@
 class RelationshipGraph:
 
     def __init__(self):
-        self.character_to_page = {
-            'Ursula': 1,
-            'Jose Arcadio Buendia': 2,
-            'Jose Arcadio': 10,
-            'Aureliano': 35,
-            'Rebeca': 70
+        self.characters_info = {
+            'Ursula': {
+                'page': 1,
+                'description': 'asd',
+            },
+            'Jose Arcadio Buendia': {
+                'page': 2,
+                'description': 'asd',
+            },
+            'Jose Arcadio': {
+                'page': 10,
+                'description': 'asd',
+            },
+            'Aureliano': {
+                'page': 35,
+                'description': 'asd',
+            },
+            'Rebeca': {
+                'page': 70,
+                'description': 'asd',
+            }
         }
         self.graph = {
             'Ursula': [{'to': 'Jose Arcadio Buendia', 'label': 'esposa'}, {'to': 'Jose Arcadio', 'label': 'mae'}, {'to': 'Aureliano', 'label': 'mae'}, {'to': 'Rebeca', 'label': 'mae'}],
@@ -17,7 +32,7 @@ class RelationshipGraph:
         }
 
     def get_characters(self, graph):
-        return list(graph.keys())
+        return [{'name': k, **v} for k, v in self.characters_info.items() if k in graph]
 
     def get_edges(self, graph):
         return [{'from': a, 'to': b['to']} for a, v in graph.items() for b in v]
@@ -25,7 +40,7 @@ class RelationshipGraph:
     def get_subgraph_until_page(self, page):
         subgraph = {}
         for c1, relations in self.graph.items():
-            if self.character_to_page[c1] > page:
+            if self.characters_info[c1]['page'] > page:
                 continue
-            subgraph[c1] = [c2 for c2 in relations if self.character_to_page[c2['to']] <= page]
+            subgraph[c1] = [c2 for c2 in relations if self.characters_info[c2['to']]['page'] <= page]
         return subgraph
