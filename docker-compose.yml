@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+    - "8000:8000"
+    volumes:
+    - .:/app/graph_api
+
+volumes:
+  cache:
