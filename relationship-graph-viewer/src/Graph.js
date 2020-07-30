@@ -36,7 +36,9 @@ class RelationshipGraph extends Component {
       network: null,
       currentNode: null,
       defaultPage: 1,
-      page: null
+      page: null,
+      maxPage: null,
+      bookName: '',
     }
   }
 
@@ -65,7 +67,9 @@ class RelationshipGraph extends Component {
           nodes: newNodes,
           graph: response.data.graph,
           graphUUID: uuidv4(),
-          page: page
+          page: page,
+          maxPage: response.data.max_page,
+          bookName: response.data.book_name,
         })
       })
       .catch(error => {
@@ -84,7 +88,7 @@ class RelationshipGraph extends Component {
   }
 
   render() {
-    const { nodes, edges, defaultPage, page, graphUUID, currentNode, graph } = this.state
+    const { nodes, edges, defaultPage, page, graphUUID, currentNode, graph, maxPage, bookName } = this.state
     if (!nodes || !edges) return null
 
     const options = {
@@ -134,18 +138,18 @@ class RelationshipGraph extends Component {
         <h1>Relationship Graph Viewer</h1>
         <div>
           <Typography id="page-slider" gutterBottom>
-            Page {page}
+            Book "{bookName}" - Page {page}
           </Typography>
           <Slider
+            marks={ [{value: 1, label: 'Page 1'}, {value: maxPage, label: `Page ${maxPage}`}] }
             defaultValue={defaultPage}
             onChangeCommitted={this.changePage}
             getAriaValueText={valuetext}
             aria-labelledby="page-slider"
             valueLabelDisplay="auto"
             step={1}
-            marks
             min={1}
-            max={100}
+            max={maxPage}
           />
         </div>
         <div className="col-xs-12">

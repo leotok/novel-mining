@@ -25,11 +25,16 @@ def graph():
                 'graph': subgraph,
                 'nodes': g.get_characters(subgraph),
                 'edges': g.get_edges(subgraph),
+                'max_page': 100,
+                'book_name': 'One Hundred Years of Solitude',
             })
+        graph = g.get_graph()
         return jsonify({
-            'graph': g.get_graph(),
-            'nodes': g.get_characters(g.graph),
-            'edges': g.get_edges(g.graph),
+            'graph': graph,
+            'nodes': g.get_characters(graph),
+            'edges': g.get_edges(graph),
+            'max_page': 100,
+            'book_name': 'One Hundred Years of Solitude',
         })
 
     except Exception as e:
