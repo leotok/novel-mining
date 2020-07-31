@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Graph from "react-graph-vis";
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import axios from 'axios'
+import EntityViewer from './EntityViewer'
+import { Box } from '@material-ui/core';
 
 // References:
 // - https://material-ui.com/
@@ -95,7 +98,7 @@ class RelationshipGraph extends Component {
       layout: {
         hierarchical: false
       },
-      height: "580px",
+      height: "500px",
       nodes: {
         shape: 'circle',
         widthConstraint: {
@@ -134,12 +137,16 @@ class RelationshipGraph extends Component {
     };
 
     return (
-      <div className="row">
-        <h1>Relationship Graph Viewer</h1>
-        <div>
-          <Typography id="page-slider" gutterBottom>
-            Book "{bookName}" - Page {page}
+      <Grid container>
+        <Grid style={{ marginBottom: 30 }} item xs={12}>
+          <Typography variant='h5'>
+            Book "{bookName}"
           </Typography>
+        </Grid>
+        <Grid item xs={6}>
+
+          <Typography variant='h6'>Graph at page {page}</Typography>
+          
           <Slider
             marks={ [{value: 1, label: 'Page 1'}, {value: maxPage, label: `Page ${maxPage}`}] }
             defaultValue={defaultPage}
@@ -151,8 +158,7 @@ class RelationshipGraph extends Component {
             min={1}
             max={maxPage}
           />
-        </div>
-        <div className="col-xs-12">
+
           <Graph
             key={graphUUID}
             graph={{ nodes, edges }}
@@ -162,17 +168,16 @@ class RelationshipGraph extends Component {
               this.getNetwork(network)
             }}
           />
-          {graph[currentNode]?
-            <div>
-              <p>Name: {graph[currentNode].name}</p>
-              <p>Description: {graph[currentNode].description}</p>
-              <p>First appearance on page {graph[currentNode].page}</p>
-            </div>
-            :
-            null
-          }
-        </div>
-      </div>
+
+        </Grid>
+        
+        <Grid item xs={6}>
+          <Box centered >
+            <Typography variant='h6'style={{ marginBottom: 60 }} >Entity</Typography>
+            <EntityViewer node={graph[currentNode]}/>
+          </Box>
+        </Grid>
+      </Grid>
     );
   }
 
