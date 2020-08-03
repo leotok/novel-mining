@@ -64,11 +64,10 @@ class RelationshipGraph extends Component {
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
           newNodes.push({ 
-            'id': node.name,
-            'label': node.name,
-            'title': node,
+            id: node.name,
+            label: node.name,
+            title: node.name,
             value: node.pages.length,
-            page: node.page,
             description: node.description,
             firstPage: node.first_page,
             lastPage: node.last_page,
@@ -115,16 +114,16 @@ class RelationshipGraph extends Component {
         shape: 'circle',
         widthConstraint: {
           minimum: 80,
-          maximum: 150
+          maximum: 200
         },
         scaling: {
           min: 80,
-          max: 150,
+          max: 200,
           label: false,
-          customScalingFunction: (min,max,total,value)=> {
-              var scale = 1 / (max - min);
-              return Math.max(0,(value - min)*scale);
-          }
+          // customScalingFunction: (min,max,total,value)=> {
+          //     var scale = 1 / (max - min);
+          //     return Math.max(0,(value - min)*scale);
+          // }
         }
       },
       edges: {
@@ -157,7 +156,7 @@ class RelationshipGraph extends Component {
         </Grid>
         <Grid item xs={6}>
 
-          <Typography variant='h6'>Graph at page {page}</Typography>
+        <Typography style={{marginBottom: 30}} variant='h5'>Graph with {nodes.length} entities until page {page}</Typography>
           
           <Slider
             marks={ [{value: firstPage, label: `Page ${firstPage}`}, {value: maxPage, label: `Page ${maxPage}`}] }
@@ -185,7 +184,7 @@ class RelationshipGraph extends Component {
         
         <Grid item xs={6}>
           <Box centered >
-            <Typography variant='h6'style={{ marginBottom: 60 }} >Entity</Typography>
+            <Typography variant='h5'style={{ marginBottom: 60 }} >Entity</Typography>
             <EntityViewer node={graph[currentNode]}/>
           </Box>
         </Grid>

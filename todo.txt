@@ -1,4 +1,10 @@
-- match de entidades com erro pequeno. ex: Aureliano Buendfa, Auerliano
+- melhorar extração de entidades:
+    - erros, juntar mais similares. ex: Aureliano Buendfa, Auerliano
+    - remover apostrofes
+    - agrupar por nome tratado
+ 
 - adicionar capitulos em que entidade aparecem
 - possibilidade de ver trecho de pagina em que aparece na visualização
 - v1 relacionamentos
+- escolher outros livros
+- possibilidade de enviar texto em input (definir formato)
