@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 
 
-export default ({ node }) => {
+export default ({ node, graph }) => {
     return (
         <Grid
             container
@@ -29,6 +29,7 @@ export default ({ node }) => {
                             <p><strong>First appearance on page</strong> {node.first_page}</p>
                             <p><strong>Last appearance on page</strong> {node.last_page}</p>
                             <p><strong>Appearances:</strong> {node.pages.join(', ')}</p>
+                            <p><strong>Relates to:</strong> {node.relations.map(r => graph[r.to].name).join(', ')}</p>
                         </div>
                         :
                         <Typography variant="h5" component="h2">

@@ -190,7 +190,7 @@ class RelationshipGraph extends Component {
         <Grid item xs={6}>
           <Box centered >
             <Typography variant='h5'style={{ marginBottom: 60 }} >Entity</Typography>
-            <EntityViewer node={graph[currentNode]}/>
+            <EntityViewer node={graph[currentNode]} graph={graph} />
           </Box>
         </Grid>
       </Grid>

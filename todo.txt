@@ -4,7 +4,9 @@
     - agrupar por nome tratado
  
 - adicionar capitulos em que entidade aparecem
+- buscar personagem no grafo com keyword search/dropdown
 - possibilidade de ver trecho de pagina em que aparece na visualização
-- v1 relacionamentos
+- mais informações sobre personagem
+- v2 relacionamentos
 - escolher outros livros
 - possibilidade de enviar texto em input (definir formato)
