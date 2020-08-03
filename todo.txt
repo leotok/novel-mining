@@ -1,0 +1,4 @@
+- match de entidades com erro pequeno. ex: Aureliano Buendfa, Auerliano
+- adicionar capitulos em que entidade aparecem
+- possibilidade de ver trecho de pagina em que aparece na visualização
+- v1 relacionamentos

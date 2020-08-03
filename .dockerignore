@@ -1,6 +1,10 @@
-data/
+!data/
+!graph_api
+!relationship-graph-viewer/
 .ipynb_checkpoints/
 __pycache__/
 *.ipynb
-relationship-graph-viewer/
+relationship-graph-viewer/node_modules/
 experimentation/
+.vscode/
+relationship-graph-viewer/node_modules/

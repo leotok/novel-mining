@@ -12,7 +12,8 @@ import { Box } from '@material-ui/core';
 // - https://github.com/crubier/react-graph-vis
 // - https://visjs.github.io/vis-network/docs/network/
 
-const BASE_URL = 'http://localhost:8000/graph'
+const MOCK_DATA = false
+const BASE_URL = `http://localhost:8000/graph?mock=${(MOCK_DATA)? 1 : 0}`
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -38,7 +39,7 @@ class RelationshipGraph extends Component {
       edges: null,
       network: null,
       currentNode: null,
-      defaultPage: 1,
+      defaultPage: null,
       page: null,
       maxPage: null,
       bookName: '',
@@ -46,14 +47,14 @@ class RelationshipGraph extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchGraph(1)
+    this.fetchGraph(9) // TODO: correct first page
   }
 
   fetchGraph = (page = null) => {
     if (page === this.state.page) return
     let url = `${BASE_URL}`
     if (page) {
-        url = `${url}?page=${page}`
+        url = `${url}&page=${page}`
     }
 
     axios.get(url)
@@ -62,7 +63,17 @@ class RelationshipGraph extends Component {
 
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
-          newNodes.push({ 'id': node.name, 'label': node.name, 'title': node, value: 1, page: node.page, description: node.description })
+          newNodes.push({ 
+            'id': node.name,
+            'label': node.name,
+            'title': node,
+            value: node.pages.length,
+            page: node.page,
+            description: node.description,
+            firstPage: node.first_page,
+            lastPage: node.last_page,
+            pages: node.pages,
+          })
         }
 
         this.setState({ 
@@ -72,6 +83,7 @@ class RelationshipGraph extends Component {
           graphUUID: uuidv4(),
           page: page,
           maxPage: response.data.max_page,
+          firstPage: response.data.first_page,
           bookName: response.data.book_name,
         })
       })
@@ -91,7 +103,7 @@ class RelationshipGraph extends Component {
   }
 
   render() {
-    const { nodes, edges, defaultPage, page, graphUUID, currentNode, graph, maxPage, bookName } = this.state
+    const { nodes, edges, page, graphUUID, currentNode, graph, maxPage, firstPage, bookName } = this.state
     if (!nodes || !edges) return null
 
     const options = {
@@ -148,14 +160,14 @@ class RelationshipGraph extends Component {
           <Typography variant='h6'>Graph at page {page}</Typography>
           
           <Slider
-            marks={ [{value: 1, label: 'Page 1'}, {value: maxPage, label: `Page ${maxPage}`}] }
-            defaultValue={defaultPage}
+            marks={ [{value: firstPage, label: `Page ${firstPage}`}, {value: maxPage, label: `Page ${maxPage}`}] }
+            defaultValue={firstPage}
             onChangeCommitted={this.changePage}
             getAriaValueText={valuetext}
             aria-labelledby="page-slider"
             valueLabelDisplay="auto"
             step={1}
-            min={1}
+            min={firstPage}
             max={maxPage}
           />
 

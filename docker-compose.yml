@@ -3,11 +3,19 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile.api
+      dockerfile: graph_api/Dockerfile
     ports:
     - "8000:8000"
     volumes:
-    - .:/app/graph_api
-
-volumes:
-  cache:
+    - .:/app/
+  
+  ui:
+    build:
+      context: .
+      dockerfile: relationship-graph-viewer/Dockerfile
+    volumes:
+    - .:/app/
+    ports:
+    - "3000:3000"
+    # links:
+    # - api

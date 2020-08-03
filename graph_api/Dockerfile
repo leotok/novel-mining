@@ -1,6 +1,5 @@
 FROM python:3.6-slim
 
-
 RUN python3.6 -m pip install pip --upgrade
 
 WORKDIR /app

@@ -24,9 +24,11 @@ export default ({ node }) => {
                 <CardContent>
                     {node?
                         <div>
-                            <p>Name: {node.name}</p>
-                            <p>Description: {node.description}</p>
-                            <p>First appearance on page {node.page}</p>
+                            <p><strong>Name:</strong> {node.name}</p>
+                            {/* <p><strong>Description:</strong> {node.description}</p> */}
+                            <p><strong>First appearance on page</strong> {node.first_page}</p>
+                            <p><strong>Last appearance on page</strong> {node.last_page}</p>
+                            <p><strong>Appearances:</strong> {node.pages.join(', ')}</p>
                         </div>
                         :
                         <Typography variant="h5" component="h2">
