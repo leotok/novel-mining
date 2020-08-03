@@ -64,7 +64,7 @@ class RelationshipGraph extends Component {
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
           newNodes.push({ 
-            id: node.name,
+            id: node.id,
             label: node.name,
             title: node.name,
             value: node.pages.length,
@@ -127,6 +127,11 @@ class RelationshipGraph extends Component {
         }
       },
       edges: {
+        arrows: {
+          to: {
+            enabled: false
+          }
+        },
         smooth: {
           forceDirection: "none"
         }

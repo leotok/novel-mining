@@ -20,7 +20,7 @@ def health():
 def graph():
     try:
         page = request.args.get("page")
-        mock = request.args.get("mock")
+        mock = request.args.get("mock", 0)
 
         if bool(int(mock)):
             g = g_mock
