@@ -40,6 +40,5 @@ $ yarn start
 
 After running both the backend and the frontend, access `localhost:3000` and you should see the following interface.
 
-![Interface][imgs/interface.png]
-
+<img src="imgs/interface.png" width="600"  />
 
