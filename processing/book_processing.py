@@ -105,7 +105,7 @@ def generate_relationship_graph(entities_person_page_df):
         relations = set()
         for p in entities_info[k]['pages']:
             relations.update(set(entities_by_page[p]))
-        entities_info[k]['relations'] = [{'from': k, 'to': r} for r in relations if k != r]
+        entities_info[k]['relations'] = sorted([{'from': k, 'to': r} for r in relations if k != r], key=lambda x: x['to'])
 
     return entities_info
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     entities_df['text_clean'] = entities_df.text.apply(lambda t: clean_text(t))
 
     entities_person_df = force_match_person_entities(entities_df)
-    
+
     num_characters = entities_person_df.query('label_fix == "PERSON"').shape[0]
     print (f'Found {num_characters} characters.')
 

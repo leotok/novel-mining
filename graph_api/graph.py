@@ -3,8 +3,10 @@ import json
 
 class RelationshipGraph:
 
-    def __init__(self, mock=False):
-        if mock:
+    def __init__(self, mock=False, mock_data=None):
+        if mock_data:
+            self.characters_info = mock_data
+        elif mock:
             self.characters_info = {
                 'ursula': {
                     'name': 'Ursula',
@@ -70,8 +72,8 @@ class RelationshipGraph:
                         edges.add((a,b['to']))
                     else:
                         edges.add((b['to'], a))
-            return [{'from': a, 'to': b} for a, b in edges]
-        return [{'from': a, 'to': b['to']} for a, v in graph.items() for b in v['relations']]
+            return sorted([{'from': a, 'to': b} for a, b in edges], key=lambda x: x['from'])
+        return sorted([{'from': a, 'to': b['to']} for a, v in graph.items() for b in v['relations']], key=lambda x: x['from'])
 
     def get_subgraph_until_page(self, page):
         subgraph = {}
