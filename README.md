@@ -1,7 +1,7 @@
-# Novel Mining
+# Dynamic relationship graph extraction in literary texts
 
-## Data (.txt file)
-- One Hundred Years of solitude, Gabriel G. Marquez
+## Data
+- One Hundred Years of solitude, Gabriel G. Marquez (.txt file)
 
 ## Installing
 
@@ -35,4 +35,11 @@ $ cd relationship-graph-viewer
 $ yarn
 $ yarn start
 ```
+
+## How to use
+
+After running both the backend and the frontend, access `localhost:3000` and you should see the following interface.
+
+![alt text][https://github.com/leotok/novel-mining/raw/master/imgs/interface.png]
+
 
