@@ -40,6 +40,6 @@ $ yarn start
 
 After running both the backend and the frontend, access `localhost:3000` and you should see the following interface.
 
-![alt text][https://github.com/leotok/novel-mining/raw/master/imgs/interface.png]
+![Interface][imgs/interface.png]
 
 
