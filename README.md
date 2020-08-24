@@ -8,6 +8,7 @@
 ```sh
 $ pip install -r processing/requirements.txt
 $ pip install -r graph_api/requirements.txt
+$ python -m spacy download pt_core_news_sm
 ```
 
 ## Testing
