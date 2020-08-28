@@ -31,7 +31,7 @@ class RelationshipGraph extends Component {
 
   constructor(props) {
     super(props)
-    
+
     this.state = {
       graph: null,
       graphUUID: null,
@@ -63,7 +63,7 @@ class RelationshipGraph extends Component {
 
         for (let nodeIdx in response.data.nodes) {
           const node = response.data.nodes[nodeIdx]
-          newNodes.push({ 
+          newNodes.push({
             id: node.id,
             label: node.name,
             title: node.name,
@@ -75,7 +75,7 @@ class RelationshipGraph extends Component {
           })
         }
 
-        this.setState({ 
+        this.setState({
           edges: response.data.edges,
           nodes: newNodes,
           graph: response.data.graph,
@@ -99,6 +99,11 @@ class RelationshipGraph extends Component {
 
   changePage = (event, page) => {
     this.fetchGraph(page)
+  }
+
+  selectEntity = (name) => {
+    this.setState({ currentNode: name })
+    console.log(name)
   }
 
   render() {
@@ -144,7 +149,7 @@ class RelationshipGraph extends Component {
         solver: "forceAtlas2Based"
       }
     };
-  
+
     const events = {
       click: (obj) => {
         var { nodes, edges, event, pointer, items } = obj;
@@ -162,7 +167,7 @@ class RelationshipGraph extends Component {
         <Grid item xs={6}>
 
         <Typography style={{marginBottom: 30}} variant='h5'>Graph with {nodes.length} entities until page {page}</Typography>
-          
+
           <Slider
             marks={ [{value: firstPage, label: `Page ${firstPage}`}, {value: maxPage, label: `Page ${maxPage}`}] }
             defaultValue={firstPage}
@@ -173,6 +178,7 @@ class RelationshipGraph extends Component {
             step={1}
             min={firstPage}
             max={maxPage}
+            value={page}
           />
 
           <Graph
@@ -186,11 +192,16 @@ class RelationshipGraph extends Component {
           />
 
         </Grid>
-        
+
         <Grid item xs={6}>
           <Box centered >
             <Typography variant='h5'style={{ marginBottom: 60 }} >Entity</Typography>
-            <EntityViewer node={graph[currentNode]} graph={graph} />
+            <EntityViewer
+              nodeKey={currentNode}
+              graph={graph}
+              selectPage={this.fetchGraph}
+              selectEntity={this.selectEntity}
+            />
           </Box>
         </Grid>
       </Grid>
