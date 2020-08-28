@@ -1,3 +1,6 @@
+# Author: Leonardo Edelman Wajnsztok
+# Date: 07/2020
+
 import unittest
 from processing import book_processing
 import pandas as pd
@@ -11,7 +14,7 @@ class TestBookProcessing(unittest.TestCase):
             '\n'
             'asdasdasd\n'
             '\n'
-            '1 \n' 
+            '1 \n'
             '\n'
             'asdasd\n'
             '\n'
@@ -29,7 +32,7 @@ class TestBookProcessing(unittest.TestCase):
             '\n'
             'asdasdasd\n'
             '\n'
-            '5 \n' 
+            '5 \n'
         )
 
     def test_split_chapters(self):
@@ -46,7 +49,7 @@ class TestBookProcessing(unittest.TestCase):
 
     def test_force_match_person(self):
         df = pd.DataFrame([
-            ['john', 'PERSON'], 
+            ['john', 'PERSON'],
             ['mary', 'PERSON'],
             ['john', 'ORG'],
         ], columns=['text_clean', 'label'])
@@ -56,8 +59,8 @@ class TestBookProcessing(unittest.TestCase):
 
     def test_generate_relationship_graph(self):
         df = pd.DataFrame([
-            ['John', 'john', 'PERSON', '1', '1', '1', '3'], 
-            ['John', 'john', 'PERSON', '3', '4', '1', '3'], 
+            ['John', 'john', 'PERSON', '1', '1', '1', '3'],
+            ['John', 'john', 'PERSON', '3', '4', '1', '3'],
             ['Mary', 'mary', 'PERSON', '1', '2', '1', '2'],
             ['Mary', 'mary', 'PERSON', '2', '3', '1', '2'],
             ['Jose', 'jose', 'PERSON', '3', '5', '3', '3'],

@@ -1,3 +1,6 @@
+# Author: Leonardo Edelman Wajnsztok
+# Date: 07/2020
+
 import unittest
 from graph_api import graph
 import pandas as pd

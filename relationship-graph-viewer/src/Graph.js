@@ -1,3 +1,6 @@
+// Author: Leonardo Edelman Wajnsztok
+// Date: 07/2020
+
 import React, { Component } from 'react';
 import Graph from "react-graph-vis";
 import Slider from '@material-ui/core/Slider';

@@ -1,3 +1,6 @@
+// Author: Leonardo Edelman Wajnsztok
+// Date: 07/2020
+
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,8 +14,8 @@ function App() {
   return (
     <div className="App">
       <AppBar position="static" style={{ backgroundColor: '#1976d2', marginBottom: 30 }}>
-        <Toolbar style={{ 
-                    float       : 'none', 
+        <Toolbar style={{
+                    float       : 'none',
                     marginLeft  : 'auto',
                     marginRight : 'auto',
                 }}>

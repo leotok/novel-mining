@@ -1,3 +1,6 @@
+// Author: Leonardo Edelman Wajnsztok
+// Date: 07/2020
+
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';

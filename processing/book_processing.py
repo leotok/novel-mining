@@ -1,3 +1,6 @@
+# Author: Leonardo Edelman Wajnsztok
+# Date: 07/2020
+
 import pandas as pd
 import re
 import unidecode
@@ -18,7 +21,7 @@ def get_pages(book):
     last_page_end = 0
     for p in re.finditer('\n(\d+) \\n?', book):
         pages.append((book[last_page_end:p.end()], {
-        'start': p.start(), 
+        'start': p.start(),
         'end': p.end(),
         'page': int(p.groups()[0])
         }))
@@ -55,7 +58,7 @@ def clean_text(text):
     return text
 
 def force_match_person_entities(entities_df):
-    # all entities tokens that have at least one match as PERSON 
+    # all entities tokens that have at least one match as PERSON
     # for the same token will be considered a PERSON entity in all occurances
 
     text_entities = entities_df.groupby(['text_clean', 'label']).size().reset_index(name='total').sort_values('total', ascending=False)
@@ -81,12 +84,12 @@ def generate_relationship_graph(entities_person_page_df):
         key = row['text_clean']
         if row['label_fix'] != 'PERSON' or row['text'][0].islower():
             continue
-            
+
         if row['page'] in entities_by_page:
             entities_by_page[row['page']].append(key)
         else:
             entities_by_page[row['page']] = [key]
-        
+
         if key not in entities_info:
             entities_info[key] = {
                 'first_page': row['first_page'],
@@ -99,7 +102,7 @@ def generate_relationship_graph(entities_person_page_df):
         else:
             entities_info[key]['pos'].append(row['pos'])
             entities_info[key]['pages'].add(row['page'])
-            
+
     for k in entities_info.keys():
         entities_info[k]['pages'] = sorted(list(entities_info[k]['pages']))
         relations = set()
@@ -111,12 +114,12 @@ def generate_relationship_graph(entities_person_page_df):
 
 
 if __name__ == "__main__":
-    
+
     book_name = 'One Hundred Years of Solitude'
     book_path = 'data/one_hundred_years_of_solitude_EN.txt'
 
     print (f'Starting to process the book "{book_name}"...')
-    
+
     print (f'Reading book from "{book_path}"')
     book = load_book(book_path)
 
@@ -143,5 +146,5 @@ if __name__ == "__main__":
     print (f'Saving graph at "{graph_path}"')
     json.dump(entities_info, open(graph_path, 'w'))
 
-    
+
 

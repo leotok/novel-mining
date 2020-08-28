@@ -1,3 +1,6 @@
+# Author: Leonardo Edelman Wajnsztok
+# Date: 07/2020
+
 import json
 
 
@@ -51,18 +54,27 @@ class RelationshipGraph:
             }
         else:
             self.characters_info = json.load(open('data/entities_info.json'))
-        
+
         self.max_page = 0
         for info in self.characters_info.values():
             if info['last_page'] > self.max_page:
                 self.max_page = info['last_page']
 
+    # Returns the complete relationship graph
+    # @return dict
     def get_graph(self):
-        return self.characters_info # { c: {'name': c, **info } for c, info in self.characters_info.items()}
+        return self.characters_info
 
+    # Return a list of characters of a given relationship graph
+    # @param graph: dict representing a subgraph of the relationship graph
+    # @return list of characters
     def get_characters(self, graph):
         return [{**v, 'id': k} for k, v in self.characters_info.items() if k in graph]
 
+    # Return a list of relationships of a given relationship graph
+    # @param graph: dict representing a subgraph of the relationship graph
+    # @param ignore_direction: boolean indication if should consider a directed graph
+    # @return list of relationships
     def get_edges(self, graph, ignore_direction=True):
         if ignore_direction:
             edges = set()
@@ -75,6 +87,9 @@ class RelationshipGraph:
             return sorted([{'from': a, 'to': b} for a, b in edges], key=lambda x: x['from'])
         return sorted([{'from': a, 'to': b['to']} for a, v in graph.items() for b in v['relations']], key=lambda x: x['from'])
 
+    # Return a subgraph of the relationship graph considering information known until the specified page
+    # @param page: int
+    # @return dict representing a subgraph of the relationship graph
     def get_subgraph_until_page(self, page):
         subgraph = {}
         for c1, info in self.characters_info.items():

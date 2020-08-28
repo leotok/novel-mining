@@ -1,3 +1,6 @@
+# Author: Leonardo Edelman Wajnsztok
+# Date: 07/2020
+
 import joblib
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
@@ -16,6 +19,13 @@ g_mock = RelationshipGraph(mock=True)
 def health():
     return 'Graph-API'
 
+# Endpoint responsible for returning the relationship graph
+# given a page number. The graph should contain characters as nodes
+# and relationships as edges for a given book.
+#
+# Query string parameters:
+# - page: int -> page number
+# - mock: int -> 0 or 1, indicating if the API should use mock data
 @api.route('/graph', methods=['GET'])
 def graph():
     try:
