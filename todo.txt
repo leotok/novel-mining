@@ -7,6 +7,8 @@
 - buscar personagem no grafo com keyword search/dropdown
 - possibilidade de ver trecho de pagina em que aparece na visualização
 - mais informações sobre personagem
+- metrica de importancia de um personagem com filtro (ex: nº de ocorrencias, relacionamentos)
 - v2 relacionamentos
 - escolher outros livros
 - possibilidade de enviar texto em input (definir formato)
+- range de paginas
