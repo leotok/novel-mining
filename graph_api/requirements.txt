@@ -8,5 +8,5 @@ gunicorn==20.0.4
 ipdb
 unidecode
 sklearn
-Flask-Cors==3.0.3
+Flask-Cors==3.0.9
 networkx==2.4
